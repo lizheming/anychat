@@ -67,6 +67,7 @@
 
 	socket.on('chat', function(data) {
 		chatHistory.innerHTML += generateHTML('#msg-tpl', data);
+		chatHistory.scrollTop = chatHistory.scrollHeight;
 	});
 
 	var sendBtn = query('.btn-send');
@@ -75,7 +76,11 @@
 	var addMsg = function() {
 		var msg = inputBox.innerText;
 		inputBox.innerText = '';
-		// chatHistory.innerHTML += generateHTML('#msg-tpl', msg);
+		chatHistory.innerHTML += generateHTML('#msg-mine-tpl', {
+			displayName: name,
+			message: msg
+		});
+		chatHistory.scrollTop = chatHistory.scrollHeight;
 		socket.emit('chat', {
 			room: getRoomByUrl(),
 			userId: id,
