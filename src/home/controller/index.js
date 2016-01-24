@@ -7,12 +7,12 @@ export default class extends Base {
    * index action
    * @return {Promise} []
    */
-  indexAction(){
+  indexAction() {
     return this.display();
   }
 
   chatAction() {
-
+    return this.display();
   }
 
   testAction() {

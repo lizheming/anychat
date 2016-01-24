@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>请选择你的名字</title>
+	<style>
+		html, body {
+			height: 100%;
+			width: 100%;
+			margin: 0;
+			padding: 0;
+		}
+		body {
+			background: url(/static/img/bg.jpg) no-repeat;
+			background-size: cover;
+		}
+
+		.input-wrap {
+			width: 250px;
+			position: absolute;
+			margin: auto;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			height: 38px;
+			line-height: 38px;
+			font-size: 14px;
+			-webkit-border-radius: 2px;
+			-moz-border-radius: 2px;
+			border-radius: 2px;
+			background: white;
+			border: 1px solid #c8c8c8;
+		}
+
+		.input-wrap label {
+			width: 64px;
+		    display: inline-block;
+		    text-align: right;
+		    padding: 0 5px;
+		    color: #666;
+		}
+
+		.input-wrap input {
+		    height: 22px;
+		    border: 0;
+		    outline: 0;
+		    color: #666;
+		    font-size: 14px;
+		}
+
+		.join {
+		    background-color: #04BE02;
+		    color: #fff;
+		    border: 0;
+		    line-height: 20px;
+		    padding-left: 10px;
+		    padding-right: 10px;
+		    border-radius: 3px;
+		    cursor: pointer;
+		}
+	</style>
+</head>
+<body>
+	<div class="input-wrap">
+        <label for="username">用户名：</label>
+        <input type="text" maxlength="18">
+        <button class="join">进入</button>
+    </div>
+</body>
+</html>
+
