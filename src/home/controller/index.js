@@ -11,7 +11,7 @@ export default class extends Base {
     return this.display();
   }
 
-  chatAction() {
+  loginAction() {
     return this.display();
   }
 
