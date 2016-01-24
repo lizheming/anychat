@@ -5,15 +5,30 @@
 	}
 
 	// 模版
-	function generateMsg(msg) {
-		var msgHTML = query('#msg-tpl').innerHTML;
-		return msgHTML.replace(/\{(\w+)\}/g, function($0, $1) {
-			return msg;
-		});
+	function generateHTML(el, data) {
+		var msgHTML = query(el).innerHTML;
+
+		function generate(data) {
+			if (typeof(data) === 'string') {
+				return msgHTML.replace(/\{(\w+)\}/g, function($0, $1) {
+					return data;
+				});
+
+			} else {
+				return msgHTML.replace(/\{(\w+)\}/g, function($0, $1) {
+					return data[$1];
+				});
+			}
+		}
+		return Array.isArray(data) ? data.map(generate).join('') : generate(data);
 	}
 
 	function getRoomByUrl() {
 		return location.search.match(/room=(\w+)?($|&)/)[1];
+	}
+
+	function renderDisplayName() {
+
 	}
 
 	var name = localStorage.getItem('name');
@@ -30,9 +45,28 @@
 		displayName: name
 	});
 
+	socket.on('user:login', function(data) {
+		localStorage.setItem('id', data.userId);
+		var usrList = query('.user-list');
+		usrList.innerHTML = generateHTML('#usr-tpl', data.users);
+	});
+
 	socket.on('user:join', function(data) {
-		var usrList = query('user-list');
-		console.log(data);
+		var usrList = query('.user-list');
+		var chatHistory = query('.chat-history');
+		chatHistory.innerHTML += generateHTML('#tip-tpl', data.join + '已进入');
+		usrList.innerHTML = generateHTML('#usr-tpl', data.users);
+	});
+
+	socket.on('user:exit', function(data) {
+		var usrList = query('.user-list');
+		var chatHistory = query('.chat-history');
+		chatHistory.innerHTML += generateHTML('#tip-tpl', data.exit + '已退出');
+		usrList.innerHTML = generateHTML('#usr-tpl', data.users);
+	});
+
+	socket.on('chat', function(data) {
+		chatHistory.innerHTML += generateHTML('#msg-tpl', data);
 	});
 
 	var sendBtn = query('.btn-send');
@@ -41,7 +75,12 @@
 	var addMsg = function() {
 		var msg = inputBox.innerText;
 		inputBox.innerText = '';
-		chatHistory.innerHTML += generateMsg(msg);
+		// chatHistory.innerHTML += generateHTML('#msg-tpl', msg);
+		socket.emit('chat', {
+			room: getRoomByUrl(),
+			userId: id,
+			message: msg
+		})
 	};
 
 	sendBtn.addEventListener('click', addMsg);
@@ -50,6 +89,5 @@
 			addMsg();
 		}
 	});
-
 
 }()

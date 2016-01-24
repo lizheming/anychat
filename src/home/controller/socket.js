@@ -10,73 +10,86 @@ export default class extends Base {
   }
 
   chatAction(self) {
-    var members = chatrooms[ this.getRoom() ] || {};
-    var {userId, message} = self.http.data;
+    var {
+      room, userId, message
+    } = self.http.data;
+    var members = chatrooms[room];
+
+    if (!members[userId]) return false;
 
     this.broadTo('chat', {
       displayName: members[userId].displayName,
       message
-    });
+    }, room);
   }
 
   closeAction(self) {
-    var socket = self.http.socket,
-        members = chatrooms[ this.getRoom() ] || {};
+    var socket = self.http.socket;
+    var logoutRoom, logoutUserId, logoutUser;
+    for (var room in chatrooms) {
+      var members = chatrooms[room];
+      for (var userId in members) {
+        if (members[userId].socket === socket) {
+          logoutRoom = room;
+          logoutUserId = userId;
+          logoutUser = members[userId];
+        }
+      }
+    }
 
-    var logoutUserId = Object.keys(members).filter(id => members[id].socket === socket);
-    if( !logoutUserId ) return true;
+    if (!logoutUserId) return true;
 
-    var logoutUser = members[logoutUserId];
     var displayName = logoutUser.displayName;
-    delete members[logoutUserId];
+    delete chatrooms[logoutRoom][logoutUserId];
 
     /**通知其他用户有用户离开并更新成员列表**/
     this.broadTo('user:exit', {
       exit: displayName,
-      users: this.getUsers()
-    });
+      users: this.getUsers(logoutRoom)
+    }, logoutRoom);
   }
 
   adduserAction(self) {
     var socket = self.http.socket;
-    var {room, userId, displayName} = self.http.data;
-    if( !chatrooms[room] ) {
+    var {
+      room, userId, displayName
+    } = self.http.data;
+    if (!chatrooms[room]) {
       chatrooms[room] = {};
     }
 
     var members = chatrooms[room];
-    while(members[userId]) {
-      userId += 1024;
+    while (members[userId]) {
+      userId += 1;
     }
 
     /**通知其他用户有新用户加入，并更新用户列表**/
     this.broadTo('user:join', {
       join: displayName,
-      users: this.getUsers().concat([displayName])
-    });
+      users: this.getUsers(room).concat([displayName])
+    }, room);
 
-    members[userId] = {displayName, socket};
+    members[userId] = {
+      displayName, socket
+    };
 
     /**告诉本用户加入成功并更新用户 Id**/
-    this.emit('user:login', userId);
+    this.emit('user:login', {
+      userId, users: this.getUsers(room)
+    });
   }
 
-  getRoom() {
-    return this.get('room') || 'test';
-  }
-  broadTo(event, data, filter = '') {
-    var room = this.getRoom();
+  broadTo(event, data, room, filter = '') {
     var members = chatrooms[room] || {};
-    for(var i in members) {
-      if( i === filter ) continue;
+    for (var i in members) {
+      if (i === filter) continue;
       let member = members[i];
       member.socket.emit(event, data);
     }
   }
-  getUsers() {
-    var room = this.getRoom(),
-        members = chatrooms[room];
+  getUsers(room) {
+    var members = chatrooms[room];
 
-    return Object.keys( members ).map( member => members[member].displayName );
+    return Object.keys(members).map(member => members[member].displayName);
   }
 }

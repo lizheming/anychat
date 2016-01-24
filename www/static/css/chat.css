@@ -126,6 +126,11 @@ body {
     word-break: break-all;
 }
 
+.msg-name {
+	font-size: 12px;
+	color: #4f4f4f;
+}
+
 .msg:before {
 	position: absolute;
 	content: " ";
@@ -134,6 +139,21 @@ body {
     border-right-width: 4px;
     top: 9px;
     left: -9px;
+}
+
+.tip-wrap {
+	text-align: center;
+}
+
+.tip {
+	display: inline-block;
+    background-color: #dcdcdc;
+    font-size: 12px;
+    padding: 1px 18px;
+    color: #fff;
+    border-radius: 2px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
 }
 
 .type-area {

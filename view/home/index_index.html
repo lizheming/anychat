@@ -12,18 +12,25 @@
 				<img class="dialog-logo" src="/static/img/dialog.png">
 				<span>聊天室</span>
 			</h4>
+			<script type="text/template" id="usr-tpl">
+				<li class="user">{name}</li>
+			</script>
 			<ul class="user-list">
-				<script type="text/template" id="usr-tpl">
-					<li class="user">{name}</li>
-				</script>
-				<li class="user"><em class="cicle"></em>zhangkaihao</li>
+				<!-- <li class="user"><em class="cicle"></em>zhangkaihao</li> -->
 			</ul>
 		</nav>
 		<main class="chat-view">
 			<div class="chat-history">
 				<script type="text/template" id="msg-tpl">
-					<p class="msg-wrap">
-						<span class="msg">{msg}</span>
+					<div class="msg-wrap">
+						<h4 class="msg-name">{displayName}</h4>
+						<span class="msg">{message}</span>
+					</div>
+				</script>
+
+				<script type="text/template" id="tip-tpl">
+					<p class="tip-wrap">
+						<span class="tip">{msg}</span>
 					</p>
 				</script>
 			</div>
