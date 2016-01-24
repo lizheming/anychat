@@ -1,0 +1,33 @@
+hello
+<script src="http://s4.qhimg.com/static/535dde855bc726e2/socket.io-1.2.0.js"></script>
+<script src="http://s4.qhimg.com/static/8b5050af3b8512e1/jquery.js"></script>
+<script>
+var socket = io('http://localhost:8360');
+var room = 1234;
+var userId = parseInt(Math.random() * 10);
+var displayName = Date.now();
+
+/** 添加用户 **/
+var res = socket.emit('adduser', {
+  room: room,
+  userId: userId,
+  displayName: displayName
+});
+
+socket.emit('chat', {
+  userId: userId,
+  message: 'hello world'
+});
+
+socket.on('user:join', function(data) {
+  console.log(data);
+});
+
+socket.on('user:exit', function(data) {
+  console.log(data);
+});
+
+socket.on('chat', function(data) {
+  console.log(data);
+});
+</script>
