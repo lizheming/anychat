@@ -24,6 +24,7 @@ html, body {
 body {
 	background: url(/static/img/bg.jpg) no-repeat;
 	background-size: cover;
+	font-family: 'Microsoft Yahei', serif, monospace, sans-serif;
 }
 
 *{
@@ -94,10 +95,6 @@ body {
 	background-color: #3cc51f;
 }
 
-.user.active {
-	background: #3A3F45;
-}
-
 .chat-view {
 	width: 600px;
 	padding-left: 250px;
@@ -161,11 +158,11 @@ body {
 	font-weight: normal;
 }
 
-.msg:before,  {
+.msg:before {
 	position: absolute;
 	content: " ";
 	border: 6px solid transparent;
-	border-right-color: #FFF;
+	border-right-color: #fff;
     border-right-width: 4px;
     top: 9px;
     left: -9px;

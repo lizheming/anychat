@@ -28,7 +28,6 @@
 	}
 
 	function renderTip(tip) {
-		var chatHistory = query('.chat-history');
 		chatHistory.innerHTML += generateHTML('#tip-tpl', tip);
 	}
 
@@ -37,8 +36,31 @@
 		usrList.innerHTML = generateHTML('#usr-tpl', users);
 	}
 
+	function scrollHistoryBottom() {
+		chatHistory.scrollTop = chatHistory.scrollHeight;
+	}
+
 	var name = localStorage.getItem('name');
 	var id = localStorage.getItem('id');
+
+	var sendBtn = query('.btn-send');
+	var chatHistory = query('.chat-history');
+	var inputBox = query('.input-box');
+	var addMsg = function() {
+		var msg = inputBox.innerText;
+		inputBox.innerText = '';
+		chatHistory.innerHTML += generateHTML('#msg-mine-tpl', {
+			displayName: name,
+			message: msg
+		});
+		scrollHistoryBottom();
+		socket.emit('chat', {
+			room: getRoomByUrl(),
+			userId: id,
+			message: msg
+		})
+	};
+
 	// 如果用户没登录就跳转给用户去登录
 	if (!name || !id) {
 		window.location.href = '/index/login' + location.search;
@@ -52,43 +74,27 @@
 	});
 
 	socket.on('user:login', function(data) {
-		localStorage.setItem('id', data.userId);
 		var usrList = query('.user-list');
+		localStorage.setItem('id', data.userId);
 		usrList.innerHTML = generateHTML('#usr-tpl', data.users);
 	});
 
 	socket.on('user:join', function(data) {
 		renderUsrList(data.users);
 		renderTip(data.join + '已进入');
+		scrollHistoryBottom();
 	});
 
 	socket.on('user:exit', function(data) {
 		renderUsrList(data.users);
 		renderTip(data.exit + '已退出');
+		scrollHistoryBottom();
 	});
 
 	socket.on('chat', function(data) {
 		chatHistory.innerHTML += generateHTML('#msg-tpl', data);
-		chatHistory.scrollTop = chatHistory.scrollHeight;
+		scrollHistoryBottom();
 	});
-
-	var sendBtn = query('.btn-send');
-	var chatHistory = query('.chat-history');
-	var inputBox = query('.input-box');
-	var addMsg = function() {
-		var msg = inputBox.innerText;
-		inputBox.innerText = '';
-		chatHistory.innerHTML += generateHTML('#msg-mine-tpl', {
-			displayName: name,
-			message: msg
-		});
-		chatHistory.scrollTop = chatHistory.scrollHeight;
-		socket.emit('chat', {
-			room: getRoomByUrl(),
-			userId: id,
-			message: msg
-		})
-	};
 
 	sendBtn.addEventListener('click', addMsg);
 	inputBox.addEventListener('keyup', function(e) {
