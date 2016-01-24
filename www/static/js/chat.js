@@ -28,10 +28,22 @@
 		displayName: name
 	});
 
+	console.log(res);
+	socket.emit('chat', {
+		room: getRoomByUrl(),
+	  userId: id,
+	  message: 'hello world'
+	});
 	socket.on('user:join', function(data) {
 		console.log(data);
 	});
+	socket.on('user:exit', function(data) {
+	  console.log(data);
+	});
 
+	socket.on('chat', function(data) {
+	  console.log(data);
+	});
 	var sendBtn = query('.btn-send');
 	sendBtn.addEventListener('click', function() {
 		var inputBox = query('.input-box');
