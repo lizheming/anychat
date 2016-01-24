@@ -49,7 +49,7 @@
 		    font-size: 14px;
 		}
 
-		.join {
+		#join {
 		    background-color: #04BE02;
 		    color: #fff;
 		    border: 0;
@@ -64,9 +64,19 @@
 <body>
 	<div class="input-wrap">
         <label for="username">用户名：</label>
-        <input type="text" maxlength="18">
-        <button class="join">进入</button>
+        <input id="name" type="text" maxlength="18">
+        <button id="join">进入</button>
     </div>
 </body>
+<script>
+	var join = document.getElementById('join');
+	join.addEventListener('click', function() {
+		var name = document.getElementById('name').value;
+		var id = Date.now();
+		localStorage.setItem('id', id);
+		localStorage.setItem('name', name);
+		window.location.href = '/';
+	});
+</script>
 </html>
 

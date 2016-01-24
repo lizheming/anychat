@@ -105,6 +105,7 @@ body {
 }
 
 .chat-history {
+	overflow: hidden;
 	height: 75%;
 }
 
