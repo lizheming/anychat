@@ -19,8 +19,8 @@ export default class extends think.logic.base {
 
   checkRoom() {
     /** 必须选择一个聊天室否则随机 **/
-    if( !this.get('chat') ) {
-    	this.http.redirect('chat/' + Date.now());
-    }
+    // if( !this.get('chat') ) {
+    //  this.http.redirect('chat/' + Date.now());
+    // }
   }
 }

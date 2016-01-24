@@ -1,10 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Document</title>
+	<meta charset="UTF-8">
+	<title>New ThinkJS Application</title>
+	<link rel="stylesheet" href="/static/css/chat.css">
 </head>
 <body>
-  hello world
+	<header>
+		<h1>简聊</h1>
+	</header>
+	<div class="content">
+		<nav class="user-list-wrap">
+			<h4 class="title">
+				<img class="dialog-logo" src="/static/img/dialog.png">
+				<span>聊天室</span>
+			</h4>
+			<ul class="user-list">
+				<li class="user"><em class="cicle"></em>zhangkaihao</li>
+				<li class="user">zhangkaihao1</li>
+				<li class="user">zhangkaihao2</li>
+				<li class="user">zhangkaihao3</li>
+			</ul>
+		</nav>
+		<main class="chat-view">
+			<div class="chat-history">
+				<script type="text/template" id="msg-tpl">
+					<p class="msg-wrap">
+						<span class="msg">{msg}</span>
+					</p>
+				</script>
+			</div>
+			<div class="type-area">
+				<pre class="input-box" contenteditable="true" ></pre>
+				<button class="btn-send">发送</button>
+			</div>
+		</main>
+	</div>
 </body>
+<script src="http://s4.qhimg.com/static/535dde855bc726e2/socket.io-1.2.0.js"></script>
+<script src="/static/js/chat.js"></script>
 </html>

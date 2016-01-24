@@ -1,0 +1,172 @@
+::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    background-color: #c3c3c3;
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+*{
+	padding: 0;
+	margin: 0;
+	font-size: 16px;
+	line-height: 20px;
+	font-family: arial;
+}
+
+header {
+	padding: 70px 0 70px 0;
+	background-color: #4A6495;
+}
+
+header h1 {
+	font-size: 36px;
+	color:#fff;
+	font-weight: normal;
+	padding-left: 200px;
+}
+
+.content {
+	height: 600px;
+	margin: 0 auto;
+	width: 850px;
+	margin-top: 80px;
+}
+
+.user-list-wrap {
+    float: left;
+    height: 100%;
+    border: 1px solid #ccc;
+    color: #ccc;
+    background-color: white;
+    background-color: #2e3238;
+}
+
+.title {
+    padding: 12px 18px 11px;
+    border-bottom: 1px solid #292C33;
+}
+
+.title span {
+	vertical-align: middle;
+}
+
+.dialog-logo {
+	height: 20px;
+	width: 20px;
+	vertical-align: middle;
+}
+
+.user-list {
+    position: relative;
+    width: 250px;
+    /*color: #2e3238;*/
+}
+
+.user {
+	overflow: hidden;
+    padding: 12px 18px 11px;
+    cursor: pointer;
+    position: relative;
+    border-bottom: 1px solid #ccc;
+	background-color: #2e3238;
+	border-bottom: 1px solid #292C33;
+}
+
+.cicle {
+	display: inline-block;
+	margin-right: 5px;
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	background-color: #3cc51f;
+}
+
+.user.active {
+	background: #3A3F45;
+}
+
+.chat-view {
+	width: 600px;
+	padding-left: 250px;
+	border: 1px solid #ccc;
+	height: 600px;
+	background-color: #eee;
+}
+
+.chat-history {
+	height: 75%;
+}
+
+.msg-wrap {
+	margin: 10px;
+}
+
+.msg {
+	position: relative;
+	padding: 6px 13px;
+	max-width: 280px;
+	background-color: white;
+	display: inline-block;
+	color: #666;
+	font-size: 14px;
+	border-radius: 3px;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.msg:before {
+	position: absolute;
+	content: " ";
+	border: 6px solid transparent;
+	border-right-color: #FFF;
+    border-right-width: 4px;
+    top: 9px;
+    left: -9px;
+}
+
+.type-area {
+	border-top: 1px solid #ccc;
+	position: relative;
+	height: 25%;
+}
+
+.input-box {
+	height: 5em;
+    overflow-y: auto;
+    overflow-x: hidden;
+    outline: 0;
+    border: 0;
+    font-size: 14px;
+    background-color: #eee;
+    padding-left: 15px;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+.btn-send {
+	position: absolute;
+	right: 10px;
+	bottom: 15px;
+	background-color: #fff;
+    color: #222;
+    padding-left: 30px;
+    padding-right: 30px;
+    border: 1px solid #666;
+    display: inline-block;
+    border: 1px solid #c1c1c1;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    padding: 3px 20px;
+    font-size: 14px;
+    cursor: pointer;
+}
