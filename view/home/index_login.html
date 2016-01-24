@@ -47,6 +47,7 @@
 		    outline: 0;
 		    color: #666;
 		    font-size: 14px;
+		    width: 150px;
 		}
 
 		#join {
@@ -76,6 +77,12 @@
 		localStorage.setItem('id', id);
 		localStorage.setItem('name', name);
 		window.location.href = '/' + location.search;
+	});
+
+	document.getElementById('name').addEventListener('keyup', function(e) {
+		if(e.keyCode == 13) {
+			join.click();
+		}
 	});
 </script>
 </html>
