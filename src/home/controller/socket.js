@@ -62,7 +62,7 @@ export default class extends Base {
   }
 
   getRoom() {
-    return this.get('r') || 1234;
+    return this.get('room') || 'test';
   }
   broadTo(event, data, filter = '') {
     var room = this.getRoom();
