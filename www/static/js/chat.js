@@ -35,7 +35,7 @@
 	var id = localStorage.getItem('id');
 	// 如果用户没登录就跳转给用户去登录
 	if (!name || !id) {
-		window.location.href = '/index/login';
+		window.location.href = '/index/login' + location.search;
 	}
 
 	var socket = io('http://localhost:8360');
