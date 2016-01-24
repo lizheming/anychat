@@ -27,8 +27,14 @@
 		return location.search.match(/room=(\w+)?($|&)/)[1];
 	}
 
-	function renderDisplayName() {
+	function renderTip(tip) {
+		var chatHistory = query('.chat-history');
+		chatHistory.innerHTML += generateHTML('#tip-tpl', tip);
+	}
 
+	function renderUsrList(users) {
+		var usrList = query('.user-list');
+		usrList.innerHTML = generateHTML('#usr-tpl', users);
 	}
 
 	var name = localStorage.getItem('name');
@@ -38,7 +44,7 @@
 		window.location.href = '/index/login' + location.search;
 	}
 
-	var socket = io('http://localhost:8360');
+	var socket = io(socketUrl);
 	socket.emit('adduser', {
 		room: getRoomByUrl(),
 		userId: id,
@@ -52,17 +58,13 @@
 	});
 
 	socket.on('user:join', function(data) {
-		var usrList = query('.user-list');
-		var chatHistory = query('.chat-history');
-		chatHistory.innerHTML += generateHTML('#tip-tpl', data.join + '已进入');
-		usrList.innerHTML = generateHTML('#usr-tpl', data.users);
+		renderUsrList(data.users);
+		renderTip(data.join + '已进入');
 	});
 
 	socket.on('user:exit', function(data) {
-		var usrList = query('.user-list');
-		var chatHistory = query('.chat-history');
-		chatHistory.innerHTML += generateHTML('#tip-tpl', data.exit + '已退出');
-		usrList.innerHTML = generateHTML('#usr-tpl', data.users);
+		renderUsrList(data.users);
+		renderTip(data.exit + '已退出');
 	});
 
 	socket.on('chat', function(data) {

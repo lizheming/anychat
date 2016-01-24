@@ -8,6 +8,8 @@ export default class extends Base {
    * @return {Promise} []
    */
   indexAction() {
+    //'http://localhost:8360'
+    this.assign('socketUrl', 'http://' + this.http.host);
     return this.display();
   }
 
