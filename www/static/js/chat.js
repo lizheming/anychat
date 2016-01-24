@@ -3,6 +3,7 @@
 	function query(selector) {
 		return document.querySelector(selector);
 	}
+
 	// 模版
 	function generateMsg(msg) {
 		var msgHTML = query('#msg-tpl').innerHTML;
@@ -17,26 +18,38 @@
 
 	var name = localStorage.getItem('name');
 	var id = localStorage.getItem('id');
+	// 如果用户没登录就跳转给用户去登录
 	if (!name || !id) {
 		window.location.href = '/index/login';
 	}
 
 	var socket = io('http://localhost:8360');
-	var res = socket.emit('adduser', {
+	socket.emit('adduser', {
 		room: getRoomByUrl(),
 		userId: id,
 		displayName: name
 	});
 
 	socket.on('user:join', function(data) {
+		var usrList = query('user-list');
 		console.log(data);
 	});
 
 	var sendBtn = query('.btn-send');
-	sendBtn.addEventListener('click', function() {
-		var inputBox = query('.input-box');
+	var chatHistory = query('.chat-history');
+	var inputBox = query('.input-box');
+	var addMsg = function() {
 		var msg = inputBox.innerText;
-		var chatHistory = query('.chat-history');
-		chatHistory.innerHTML = generateMsg(msg);
-	})
+		inputBox.innerText = '';
+		chatHistory.innerHTML += generateMsg(msg);
+	};
+
+	sendBtn.addEventListener('click', addMsg);
+	inputBox.addEventListener('keyup', function(e) {
+		if (e.keyCode == 13) {
+			addMsg();
+		}
+	});
+
+
 }()
