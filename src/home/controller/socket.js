@@ -20,7 +20,7 @@ export default class extends Base {
     this.broadTo('chat', {
       displayName: members[userId].displayName,
       message
-    }, room);
+    }, room, userId);
   }
 
   closeAction(self) {
@@ -79,7 +79,7 @@ export default class extends Base {
     });
   }
 
-  broadTo(event, data, room, filter = '') {
+  broadTo(event, data, room, filter = false) {
     var members = chatrooms[room] || {};
     for (var i in members) {
       if (i === filter) continue;
