@@ -3,6 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>anychat</title>
+    <link rel="stylesheet" href="/static/libs/custombox/custombox.min.css" type="text/css">
 	<link rel="stylesheet" href="/static/css/chat.css">
 	<script>socketUrl = '<%=socketUrl%>'</script>
 </head>
@@ -12,6 +13,7 @@
 			<h4 class="title">
 				<img class="dialog-logo" src="/static/img/dialog.png">
 				<span>聊天室</span>
+            <input type="button" value="二维码" class="qr-share">
 			</h4>
 			<script type="text/template" id="usr-tpl">
 				<li class="user">{name}</li>
@@ -48,7 +50,15 @@
 			</div>
 		</main>
 	</div>
+    <div id="qrcode" style="display: none"> 
+        <div class="qr-content"></div>
+        <div class="qr-des"></div>
+    </div> 
 </body>
 <script src="http://s4.qhimg.com/static/535dde855bc726e2/socket.io-1.2.0.js"></script>
+<script type='text/javascript' src='http://cdn.staticfile.org/jquery/2.1.1/jquery.min.js'></script>
+<script type="text/javascript" src="http://cdn.staticfile.org/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+<script type="text/javascript" src="/static/libs/custombox/custombox.min.js">
+</script>
 <script src="/static/js/chat.js"></script>
 </html>

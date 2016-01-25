@@ -221,3 +221,27 @@ body {
     font-size: 14px;
     cursor: pointer;
 }
+
+#qrcode {
+    position: absolute;
+    width: 400px;
+    height: 358px;
+    top: 30px;
+    left: 50px;
+    background: white;
+    text-align: center;
+}
+
+.qr-content {
+    margin: 25px 0;
+}
+
+.qr-share {
+    position: relative;
+    width: 60px;
+    left: 85px;
+    background-color: #fff;
+    color: #222;
+    border-radius: 3px;
+    font-size: 14px
+}
