@@ -31,6 +31,17 @@
 		chatHistory.innerHTML += generateHTML('#tip-tpl', tip);
 	}
 
+    function twinklingUser(msgUser, second) {
+        $(".user-list").children("li").each(function(i, item) {
+            if($(item).text() === msgUser) {
+                $(item).css({"-webkit-animation":"twinkling 1s infinite ease-in-out"});
+                setTimeout(function(){
+                    $(item).css({"-webkit-animation": ""});
+                }, second||5000);
+            }
+        })
+    }
+
 	function renderUsrList(users) {
 		var usrList = query('.user-list');
 		usrList.innerHTML = generateHTML('#usr-tpl', users);
@@ -53,6 +64,7 @@
 			displayName: name,
 			message: msg
 		});
+
 		scrollHistoryBottom();
 		socket.emit('chat', {
 			room: getRoomByUrl(),
@@ -93,6 +105,7 @@
 
 	socket.on('chat', function(data) {
 		chatHistory.innerHTML += generateHTML('#msg-tpl', data);
+        twinklingUser(data.displayName, 3000);
 		scrollHistoryBottom();
 	});
 
