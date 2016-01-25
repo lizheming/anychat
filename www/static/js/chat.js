@@ -62,7 +62,7 @@
 		inputBox.innerText = '';
 		chatHistory.innerHTML += generateHTML('#msg-mine-tpl', {
 			displayName: name,
-			message: msg
+			message: twemoji.parse(msg)
 		});
 
 		scrollHistoryBottom();
@@ -104,6 +104,7 @@
 	});
 
 	socket.on('chat', function(data) {
+		data.message = twemoji.parse(data.message);
 		chatHistory.innerHTML += generateHTML('#msg-tpl', data);
         twinklingUser(data.displayName, 3000);
 		scrollHistoryBottom();

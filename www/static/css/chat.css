@@ -232,6 +232,10 @@ body {
     text-align: center;
 }
 
+img.emoji {
+	width: 20px;
+	height: 20px;
+}
 .qr-content {
     margin: 25px 0;
 }
