@@ -31,3 +31,4 @@ pm2 startOrReload pm2.json
 - [X] 增加二维码网址分享
 - [ ] 语音
 - [ ] 字母头像
+- [ ] mongo 消息存储
