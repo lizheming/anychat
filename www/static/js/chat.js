@@ -103,4 +103,18 @@
 		}
 	});
 
+    // 二维码分享a
+    $('#qrcode').children(".qr-content").qrcode({
+                width: 256,
+                height: 256,
+                text: location.href
+            })
+          .end().children(".qr-des").text(location.href)
+    $(".qr-share").on("click", function(e) {
+        Custombox.open({
+            target: "#qrcode",
+            effect: "fadein"
+        });
+        e.preventDefault();
+    })
 }()
