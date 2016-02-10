@@ -31,16 +31,16 @@
 		chatHistory.innerHTML += generateHTML('#tip-tpl', tip);
 	}
 
-    function twinklingUser(msgUser, second) {
-        $(".user-list").children("li").each(function(i, item) {
-            if($(item).text() === msgUser) {
-                $(item).css({"-webkit-animation":"twinkling 1s infinite ease-in-out"});
-                setTimeout(function(){
-                    $(item).css({"-webkit-animation": ""});
-                }, second||5000);
-            }
-        })
-    }
+  function twinklingUser(msgUser, second) {
+      $(".user-list").children("li").each(function(i, item) {
+          if($(item).text() === msgUser) {
+              $(item).css({"-webkit-animation":"twinkling 1s infinite ease-in-out"});
+              setTimeout(function(){
+                  $(item).css({"-webkit-animation": ""});
+              }, second||5000);
+          }
+      })
+  }
 
 	function renderUsrList(users) {
 		var usrList = query('.user-list');
@@ -50,6 +50,12 @@
 	function scrollHistoryBottom() {
 		chatHistory.scrollTop = chatHistory.scrollHeight;
 	}
+
+	var COLORS = [
+    '#e21400', '#91580f', '#f8a700', '#f78b00',
+    '#58dc00', '#287b00', '#a8f07a', '#4ae8c4',
+    '#3b88eb', '#3824aa', '#a700ff', '#d300e7'
+  ];
 
 	var name = localStorage.getItem('name');
 	var id = localStorage.getItem('id');
@@ -62,7 +68,9 @@
 		inputBox.innerText = '';
 		chatHistory.innerHTML += generateHTML('#msg-mine-tpl', {
 			displayName: name,
-			message: twemoji.parse(msg)
+			message: twemoji.parse(msg),
+			avatar: name.charAt(0).toUpperCase(),
+			background: COLORS[ name.charCodeAt(0)%COLORS.length ]
 		});
 
 		scrollHistoryBottom();
@@ -104,9 +112,13 @@
 	});
 
 	socket.on('chat', function(data) {
-		data.message = twemoji.parse(data.message);
-		chatHistory.innerHTML += generateHTML('#msg-tpl', data);
-        twinklingUser(data.displayName, 3000);
+		chatHistory.innerHTML += generateHTML('#msg-tpl', {
+			displayName: data.displayName,
+			message: twemoji.parse(data.message),
+			avatar: data.displayName.charAt(0).toUpperCase(),
+			background: COLORS[ data.displayName.charCodeAt(0)%COLORS.length ]
+		});
+		twinklingUser(data.displayName, 3000);
 		scrollHistoryBottom();
 	});
 

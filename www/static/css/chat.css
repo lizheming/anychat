@@ -121,6 +121,10 @@ body {
 	clear: both;
 }
 
+.msg-wrap-left {
+  display: inline-block;
+}
+
 .msg, .msg-mine {
 	position: relative;
 	padding: 6px 13px;
@@ -166,6 +170,28 @@ body {
     border-right-width: 4px;
     top: 9px;
     left: -9px;
+}
+.msg-avatar {
+  margin-top: 7px;
+  margin-left: 10px;
+}
+.msg-wrap .msg-avatar {
+  margin: 0 10px 0;
+  position: relative;
+  top: 11px;
+}
+.msg-avatar:before {
+  content: attr(data-avatar);
+  width: 45px;
+  height: 45px;
+  display:table-cell;
+  vertical-align: middle;
+  text-align: center;
+  font-size: 24px;
+  color: #FFF;
+}
+.msg-wrap-right {
+  float: right;
 }
 
 .tip-wrap {
@@ -251,12 +277,12 @@ img.emoji {
 }
 
 
-@-webkit-keyframes twinkling{    /*透明度由0到1*/  
-   0%{  
-      opacity:0; /*透明度为0*/  
-    }  
-   100%{  
-      opacity:1; /*透明度为1*/  
-  
-   }  
+@-webkit-keyframes twinkling{    /*透明度由0到1*/
+   0%{
+      opacity:0; /*透明度为0*/
+    }
+   100%{
+      opacity:1; /*透明度为1*/
+
+   }
  }
