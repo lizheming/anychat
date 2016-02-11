@@ -73,7 +73,7 @@
 	var join = document.getElementById('join');
 	join.addEventListener('click', function() {
 		var name = document.getElementById('name').value;
-		var id = Date.now();
+		var id = localStorage.getItem('id') ? localStorage.getItem('id') : Date.now();
 		localStorage.setItem('id', id);
 		localStorage.setItem('name', name);
 		window.location.href = '/' + location.search;
@@ -86,4 +86,3 @@
 	});
 </script>
 </html>
-

@@ -87,9 +87,10 @@ export default class extends Base {
       member.socket.emit(event, data);
     }
   }
+
   getUsers(room) {
     var members = chatrooms[room];
 
-    return Object.keys(members).map(member => members[member].displayName);
+    return Object.keys(members).map(member => ({id: member, name: members[member].displayName}));
   }
 }

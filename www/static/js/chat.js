@@ -45,6 +45,19 @@
 	function renderUsrList(users) {
 		var usrList = query('.user-list');
 		usrList.innerHTML = generateHTML('#usr-tpl', users);
+
+		var mine = query('.user-list li[data-id="'+localStorage.id+'"]');
+		if( !mine ) {
+			return false;
+		}
+
+		var btn = document.createElement('button');
+		btn.innerHTML = '修改';
+		btn.onclick = function() {
+			location.href = '/index/login'+location.search;
+		}
+		mine.appendChild( btn );
+		mine.classList.add('circle');
 	}
 
 	function scrollHistoryBottom() {
@@ -134,7 +147,7 @@
 	socket.on('user:login', function(data) {
 		var usrList = query('.user-list');
 		localStorage.setItem('id', data.userId);
-		usrList.innerHTML = generateHTML('#usr-tpl', data.users);
+		renderUsrList(data.users);
 	});
 
 	socket.on('user:join', function(data) {
