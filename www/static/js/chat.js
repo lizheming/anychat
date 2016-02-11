@@ -45,6 +45,7 @@
 	function renderUsrList(users) {
 		var usrList = query('.user-list');
 		usrList.innerHTML = generateHTML('#usr-tpl', users);
+		atwho(users);
 
 		var mine = query('.user-list li[data-id="'+localStorage.id+'"]');
 		if( !mine ) {
@@ -101,6 +102,16 @@
 			setTimeout(notification.close, 10000);
 		}
   }
+
+	function atwho(users) {
+	  $('.input-box').atwho({
+	      at: "@",
+	      data: users,
+	      max_len: 8,
+	      search_key: 'text',
+	      tpl: '<li data-value=\'@${name} \'>${name}</li>'
+	  });
+	}
 
 	var COLORS = [
     '#e21400', '#91580f', '#f8a700', '#f78b00',
@@ -204,7 +215,6 @@
 			return addMsg();
 		}
 	});
-
     // 二维码分享a
     $('#qrcode').children(".qr-content").qrcode({
                 width: 256,
