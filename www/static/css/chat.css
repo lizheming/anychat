@@ -241,14 +241,23 @@ body {
     margin-top: 10px;
 }
 
+.btn-record {
+    position: absolute;
+    right: 90px;
+    bottom: 15px;
+    padding: 3px 20px;
+    font-size: 14px;
+    background: #FFF;
+    border: 1px solid #C1c1c1;
+    border-radius: 4px;
+    color: #222;
+}
 .btn-send {
 	position: absolute;
 	right: 10px;
 	bottom: 15px;
 	background-color: #fff;
     color: #222;
-    padding-left: 30px;
-    padding-right: 30px;
     border: 1px solid #666;
     display: inline-block;
     border: 1px solid #c1c1c1;
@@ -268,6 +277,7 @@ body {
     left: 50px;
     background: white;
     text-align: center;
+    padding: 10px 20px;
 }
 
 img.emoji {

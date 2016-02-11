@@ -24,35 +24,36 @@
 			</ul>
 		</nav>
 		<main class="chat-view">
-			<div class="chat-history">
-				<script type="text/template" id="msg-tpl">
-					<div class="msg-wrap">
-					<span class="msg-wrap-left msg-avatar" data-avatar="{avatar}" style="background:{background}"></span>
-						<div class="msg-wrap-left">
-							<h4 class="msg-name">{displayName}</h4>
-							<span class="msg">{message}</span>
-						</div>
+			<script type="text/template" id="msg-tpl">
+				<div class="msg-wrap">
+				<span class="msg-wrap-left msg-avatar" data-avatar="{avatar}" style="background:{background}"></span>
+					<div class="msg-wrap-left">
+						<h4 class="msg-name">{displayName}</h4>
+						<span class="msg">{message}</span>
 					</div>
-				</script>
-				<script type="text/template" id="msg-mine-tpl">
-					<div class="msg-mine-wrap">
-						<div class="msg-wrap-left">
-							<h4 class="msg-name">{displayName}</h4>
-							<span class="msg-mine">{message}</span>
-						</div>
-						<span class="msg-wrap-right msg-avatar" data-avatar="{avatar}" style="background:{background}"></span>
+				</div>
+			</script>
+			<script type="text/template" id="msg-mine-tpl">
+				<div class="msg-mine-wrap">
+					<div class="msg-wrap-left">
+						<h4 class="msg-name">{displayName}</h4>
+						<span class="msg-mine">{message}</span>
 					</div>
-					<div class="clear"></div>
-				</script>
+					<span class="msg-wrap-right msg-avatar" data-avatar="{avatar}" style="background:{background}"></span>
+				</div>
+				<div class="clear"></div>
+			</script>
 
-				<script type="text/template" id="tip-tpl">
-					<p class="tip-wrap">
-						<span class="tip">{msg}</span>
-					</p>
-				</script>
+			<script type="text/template" id="tip-tpl">
+				<p class="tip-wrap">
+					<span class="tip">{msg}</span>
+				</p>
+			</script>
+			<div class="chat-history">
 			</div>
 			<div class="type-area">
 				<pre class="input-box" contenteditable="true" ></pre>
+				<button class="btn-record">语音</button>
 				<button class="btn-send">发送</button>
 			</div>
 		</main>
