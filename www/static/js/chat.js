@@ -51,6 +51,44 @@
 		chatHistory.scrollTop = chatHistory.scrollHeight;
 	}
 
+	function notification(name,text) {
+	  /** 标题状态改变 **/
+		var o = document.title;
+		document.title = '';
+		var note = setInterval(function() {
+			document.title = document.title.length > 1 ? document.title.substr(1) : name + ' 说...';
+		}, 500);
+		setTimeout(function() {
+			clearInterval(note);
+			document.title = o;
+		}, 10000);
+	  /** 语音提示 **/
+		document.getElementById('notification').play();
+
+	  /** 消息通知 **/
+	  if(!Notification) return false;
+	  if(Notification.permission != 'granted')
+	      Notification.requestPermission(notification);
+	  var notification = new Notification(name+' 说:', {
+				dir: 'ltr',
+				lang: 'zh-CN',
+				body: text,
+				tag: 'anychat',
+				icon: null
+	  });
+		notification.onclose = function() {
+			clearInterval(note);
+			document.title = o;
+		}
+	  /** 点击后想增加一个跳转到该页面的代码 **/
+		notification.onclick = function() {
+			this.close();
+		}
+		notification.onshow = function() {
+			setTimeout(notification.close, 10000);
+		}
+  }
+
 	var COLORS = [
     '#e21400', '#91580f', '#f8a700', '#f78b00',
     '#58dc00', '#287b00', '#a8f07a', '#4ae8c4',
@@ -118,6 +156,9 @@
 			avatar: data.displayName.charAt(0).toUpperCase(),
 			background: COLORS[ data.displayName.charCodeAt(0)%COLORS.length ]
 		});
+		if(document.hidden) {
+			notification(data.displayName, data.message);
+		}
 		twinklingUser(data.displayName, 3000);
 		scrollHistoryBottom();
 	});
