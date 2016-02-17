@@ -1,3 +1,17 @@
+function playVoice(ele, normal, playing) {
+	var audio = ele.querySelector('audio'), i = ele.querySelector('i');
+	if( i.className === playing ) {
+		audio.pause();
+		i.className = normal;
+	} else {
+		i.className = playing;
+		audio.play();
+		audio.onended = function() {
+			i.className = normal;
+		}
+	}
+}
+
 ! function() {
 	// 工具类
 	function query(selector) {
@@ -113,6 +127,69 @@
 	  });
 	}
 
+	var audioRecorder, recording;
+	function gotBuffers() {
+		audioRecorder.exportWAV(function(blob) {
+			var reader = new window.FileReader();
+			reader.readAsDataURL(blob);
+			reader.onloadend = function() {
+				var base64data = reader.result;
+				addVoiceMsg(base64data);
+			}
+		}, 'audio/mp3');
+	}
+
+	function gotStream(stream) {
+		window.AudioContext = window.AudioContext || window.webkitAudioContext;
+
+		var audioContext = new AudioContext();
+		var audioInput = null,
+		    realAudioInput = null,
+		    inputPoint = null;
+
+	    inputPoint = audioContext.createGain();
+
+	    // Create an AudioNode from the stream.
+	    realAudioInput = audioContext.createMediaStreamSource(stream);
+	    audioInput = realAudioInput;
+	    audioInput.connect(inputPoint);
+
+	    analyserNode = audioContext.createAnalyser();
+	    analyserNode.fftSize = 2048;
+	    inputPoint.connect( analyserNode );
+
+	    audioRecorder = new Recorder( inputPoint );
+
+	    zeroGain = audioContext.createGain();
+	    zeroGain.gain.value = 0.0;
+	    inputPoint.connect( zeroGain );
+	    zeroGain.connect( audioContext.destination );
+	}
+
+	function recordStart(e) {
+		if(e.keyCode !== 32 || !audioRecorder || recording) { return; }
+		audioRecorder.clear();
+		audioRecorder.record();
+		recording = true;
+	}
+	function recordStop(e) {
+		if(e.keyCode !== 32) { return; }
+		audioRecorder.stop();
+		recording = false;
+		audioRecorder.getBuffers( gotBuffers );
+	}
+
+  if (!navigator.getUserMedia)
+		navigator.getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+
+  navigator.getUserMedia({audio: true}, gotStream, function(e) { alert('Error getting audio'); console.log(e);});
+
+	$('.web-speech').click(function() {
+		var listenHandler = $(this).hasClass('on') ? 'off' : 'on';
+		$(document)[listenHandler]('keydown', recordStart);
+		$(document)[listenHandler]('keyup', recordStop);
+	})
+
 	var COLORS = [
     '#e21400', '#91580f', '#f8a700', '#f78b00',
     '#58dc00', '#287b00', '#a8f07a', '#4ae8c4',
@@ -125,6 +202,24 @@
 	var sendBtn = query('.btn-send');
 	var chatHistory = query('.chat-history');
 	var inputBox = query('.input-box');
+	function addVoiceMsg(data) {
+		chatHistory.innerHTML += generateHTML('#voice-mine-tpl', {
+			displayName: name,
+			message: data,
+			avatar: name.charAt(0).toUpperCase(),
+			background: COLORS[ name.charCodeAt(0)%COLORS.length ],
+			width: Math.min(40 + data.length / 50000 * 7, 200)
+		});
+
+		socket.emit('voice', {
+			room: getRoomByUrl(),
+			userId: id,
+			message: data
+		});
+
+		scrollHistoryBottom();
+	}
+
 	var addMsg = function() {
 		var msg = inputBox.innerText;
 		inputBox.innerText = '';
@@ -208,6 +303,21 @@
 		scrollHistoryBottom();
 	});
 
+	socket.on('chat:voice', function(data) {
+		chatHistory.innerHTML += generateHTML('#voice-tpl', {
+			displayName: data.displayName,
+			message: data.message,
+			avatar: data.displayName.charAt(0).toUpperCase(),
+			background: COLORS[ data.displayName.charCodeAt(0)%COLORS.length ],
+			width: Math.min(40 + data.message.length / 50000 * 7, 200)
+		});
+		if(document.hidden) {
+			notification(data.displayName, '[语音消息]');
+		}
+		twinklingUser(data.displayName, 3000);
+		scrollHistoryBottom();
+	});
+
 	sendBtn.addEventListener('click', addMsg);
 	inputBox.addEventListener('keydown', function(e) {
 		if (e.keyCode == 13) {
@@ -230,6 +340,11 @@
         e.preventDefault();
     });
 
+	$('.web-speech').click(function() {
+		$(this).toggleClass('on');
+		$('.input-box').toggle();
+		$('.voice-tip').toggle();
+	});
 	$('.btn-record').click(function() {
 		var $btn = $(this);
 		function onSuccess(stream) {

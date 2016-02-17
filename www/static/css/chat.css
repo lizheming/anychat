@@ -192,6 +192,9 @@ body {
   position: relative;
   top: 11px;
 }
+.msg-wrap .msg-avatar.msg-avatar-voice {
+  top: 0;
+}
 .msg-avatar:before {
   content: attr(data-avatar);
   width: 45px;
@@ -227,7 +230,78 @@ body {
 	position: relative;
 	height: 25%;
 }
-
+.type-area > .toolbar {
+    height: 30px;
+    padding: 5px 17px;
+}
+.web-face {
+  background: url(https://res.wx.qq.com/zh_CN/htmledition/v2/images/icon/sprite@2x28a2f7.png) 0 -805px;
+  width: 30px;
+  height: 30px;
+  vertical-align: middle;
+  display: inline-block;
+  background-size: 150px 2489px;
+}
+.web-speech {
+  width: 50px;
+  height: 20px;
+  float: right;
+  border-radius: 20px;
+  margin-top: 4px;
+  background: #C3C3C3;
+}
+.web-speech::after {
+  content: '';
+  width: 18px;
+  height: 18px;
+  border-radius: 18px;
+  background: #FFF;
+  display: block;
+  margin: 1px;
+  transition: all .5s;
+}
+.web-speech.on {
+  background: #3caf36;
+}
+.web-speech.on::after {
+  margin-left: 31px;
+}
+.web-voice-gray {
+    float: left;
+    background: url(https://res.wx.qq.com/zh_CN/htmledition/v2/images/icon/sprite@2x28a2f7.png) 0 -2427px;
+    width: 23px;
+    height: 23px;
+    vertical-align: middle;
+    display: inline-block;;
+    background-size: 150px 2489px;
+}
+.web-voice-gray-playing {
+    float:left;
+        background: url(https://res.wx.qq.com/zh_CN/htmledition/v2/images/icon/web_wechat_voice_gray_playing@2x28a2f7.gif);
+        width: 23px;
+        height: 23px;
+        vertical-align: middle;
+        display: inline-block;
+        background-size: 23px 23px
+    }
+.web-voice-green {
+    float:right;
+    background: url(https://res.wx.qq.com/zh_CN/htmledition/v2/images/icon/sprite@2x28a2f7.png) 0 -2450px;
+    width: 23px;
+    height: 23px;
+    vertical-align: middle;
+    display: inline-block;
+    background-size: 150px 2489px;
+}
+.web-voice-playing {
+    float:right;
+    background: url(https://res.wx.qq.com/zh_CN/htmledition/v2/images/icon/web_wechat_voice_playing@2x28a2f7.gif);
+    width: 23px;
+    height: 23px;
+    vertical-align: middle;
+    display: inline-block;
+    background-size: 23px 23px;
+}
 .input-box {
 	height: 5em;
     overflow-y: auto;
@@ -239,6 +313,12 @@ body {
     padding-left: 15px;
     margin-right: 10px;
     margin-top: 10px;
+}
+.voice-tip {
+  display: none;
+  line-height: 5em;
+  text-align: center;
+  color: #a3a3a3;
 }
 
 .btn-record {

@@ -9,6 +9,7 @@ export default {
     open: 'home/socket/open',
     close: 'home/socket/close',
     chat: 'home/socket/chat',
-    adduser: 'home/socket/adduser'
+    adduser: 'home/socket/adduser',
+    voice: '/home/socket/voice'
   }
 };

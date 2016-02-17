@@ -23,6 +23,20 @@ export default class extends Base {
     }, room, userId);
   }
 
+  voiceAction(self) {
+    var {
+      room, userId, message
+    } = self.http.data;
+    var members = chatrooms[room];
+
+    if (!members[userId]) return false;
+
+    this.broadTo('chat:voice', {
+      displayName: members[userId].displayName,
+      message
+    }, room, userId);
+  }
+
   closeAction(self) {
     var socket = self.http.socket;
     var logoutRoom, logoutUserId, logoutUser;

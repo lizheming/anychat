@@ -33,6 +33,35 @@
 					</div>
 				</div>
 			</script>
+			<script type="text/template" id="voice-tpl">
+				<div class="msg-wrap">
+					<span class="msg-wrap-left msg-avatar msg-avatar-voice" data-avatar="{avatar}" style="background:{background}"></span>
+					<div class="msg-wrap-left">
+						<h4 class="msg-name">{displayName}</h4>
+						<div class="msg" onclick="playVoice(this, 'web-voice-gray', 'web-voice-gray-playing')">
+							<div class="voice" style="width:{width}px">
+								<i class="web-voice-gray"></i>
+								<audio src="{message}" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</script>
+			<script type="text/template" id="voice-mine-tpl">
+				<div class="msg-mine-wrap">
+					<div class="msg-wrap-left">
+						<h4 class="msg-name">{displayName}</h4>
+						<div class="msg-mine" onclick="playVoice(this, 'web-voice-green', 'web-voice-playing');">
+							<div class="voice" style="width:{width}px">
+								<i class="web-voice-green"></i>
+								<audio src="{message}" />
+							</div>
+						</div>
+					</div>
+					<span class="msg-wrap-right msg-avatar" data-avatar="{avatar}" style="background:{background}"></span>
+				</div>
+				<div class="clear"></div>
+			</script>
 			<script type="text/template" id="msg-mine-tpl">
 				<div class="msg-mine-wrap">
 					<div class="msg-wrap-left">
@@ -52,8 +81,12 @@
 			<div class="chat-history">
 			</div>
 			<div class="type-area">
+				<div class="toolbar" id="toolbar">
+					<a href="javascript:void(0)" class="web-face"></a>
+					<div class="web-speech"></div>
+				</div>
 				<pre class="input-box" contenteditable="true" ></pre>
-				<button class="btn-record">语音</button>
+				<div class="voice-tip">按住空格键(Space)说话</div>
 				<button class="btn-send">发送</button>
 			</div>
 		</main>
@@ -70,5 +103,6 @@
 <script src="/static/libs/custombox/custombox.min.js"></script>
 <script src="/static/libs/caret.js"></script>
 <script src="/static/libs/atwho.min.js"></script>
+<script src="/static/libs/record/recorder.js"></script>
 <script src="/static/js/chat.js"></script>
 </html>
