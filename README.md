@@ -1,5 +1,7 @@
 ## README
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/lizheming/anychat.svg)](https://greenkeeper.io/)
+
 application created by [ThinkJS](http://www.thinkjs.org)
 
 ## install dependencies
